@@ -24,13 +24,22 @@ def extract_fields(result):
 
 
 
-for zip_code in zip_codes:
+#for zip_code in zip_codes:
     result = search.by_zipcode(zip_code)
     if result:
         zip_code_info.append(extract_fields(result))
 
 
-columns = ["Zipcode","population","population_density","housing_units","median_home_value","median_household_income"]
+#columns = ["Zipcode","population","population_density","housing_units","median_home_value","median_household_income"]
 
-df = pd.DataFrame(zip_code_info, columns=columns)
-df.to_csv('zip_code_info.csv', index=False)
+#df = pd.DataFrame(zip_code_info, columns=columns)
+#df.to_csv('zip_code_info.csv', index=False)
+
+#spojeni 2 tabulek v jednu, je to treba dodelat, zatim to nefunguje
+
+df1 = pd.read_csv('nyc-rolling-sales.csv')
+df2 = pd.read_csv('zip_code_info.csv')
+
+merged_df = df1.merge(df2, on='Zipcode', how='inner')
+
+merged_df.to_csv('merged_data.csv', index=False)
